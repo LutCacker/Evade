@@ -153,6 +153,9 @@ public class Main extends ApplicationAdapter {
             o.body.setLinearVelocity(0, -2f);
 
             if (obstacleY < deadZone) {
+                if (!o.didHitPlayer) {
+                    player.addScore(5);
+                }
                 world.destroyBody(o.body);
                 obstacles.removeIndex(i);
             }

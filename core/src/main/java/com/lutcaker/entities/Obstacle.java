@@ -17,6 +17,7 @@ public class Obstacle extends Entity {
     public int damage;
     public int width;
     public int height;
+    public boolean didHitPlayer;
     float randomX;
 
 
@@ -26,6 +27,7 @@ public class Obstacle extends Entity {
         this.damage = damage;
         int worldWidth = 5;
         int worldHeight = 8;
+        didHitPlayer = false;
         shape = new PolygonShape();
         bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.KinematicBody;
