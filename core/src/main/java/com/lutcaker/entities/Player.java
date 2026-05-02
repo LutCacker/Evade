@@ -2,6 +2,7 @@ package com.lutcaker.entities;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.*;
 
@@ -19,19 +20,32 @@ public class Player extends Entity {
     public int health;
     public long score;
     public boolean isContacting;
+    private int groundContacts = 0;
     public boolean onGround;
     public boolean isDead = false;
 
-    public void setOnGround(boolean value) {
-         onGround = value;
+    public void addGroundContacts() {
+         groundContacts++;
+    }
+
+    public void removeGroundContacts() {
+        groundContacts = Math.max(0, groundContacts - 1);
     }
 
     public boolean isOnGround() {
-        return onGround;
+        return groundContacts > 0;
     }
 
     public void die() {
         isDead = true;
+    }
+
+    public void addScore(long amount) {
+        score += amount;
+    }
+
+    public long getScore() {
+        return score;
     }
 
     public void takeDamage(int damage) {

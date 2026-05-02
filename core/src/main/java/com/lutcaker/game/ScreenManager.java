@@ -7,19 +7,23 @@ import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.utils.Array;
 
 public class ScreenManager {
-    private ApplicationAdapter app;
+    private Game game;
     private Array<Screen> screens;
     private Screen currentScreen;
 
 
-    public ScreenManager(ApplicationAdapter app) {
-        this.app = app;
+    public ScreenManager(Game game) {
+        this.game = game;
         this.screens = new Array<>();
     }
 
 
     public void addScreen(Screen screen) {
-        screens.add(screen);
+        if (currentScreen != null) {
+            currentScreen = screen;
+        }
+
+        game.setScreen(currentScreen);
     }
 
     public void removeScreen(Screen screen) {
@@ -31,7 +35,7 @@ public class ScreenManager {
             currentScreen.hide();
         }
         currentScreen = screen;
-        currentScreen.show();
+        game.setScreen(currentScreen);
     }
 
     public void render(float deltaTime) {

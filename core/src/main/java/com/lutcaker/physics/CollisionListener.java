@@ -19,16 +19,21 @@ public class CollisionListener implements ContactListener {
         //Check if dataA was a player and if dataB was an obstacle
         if (dataA instanceof Player && dataB instanceof Obstacle) {
             ((Player) dataA).takeDamage(((Obstacle) dataB).damage);
-            System.out.println(((Player) dataA).health);
+            ((Obstacle) dataB).didHitPlayer = true;
         }
 
         //CHeck if dataB was a player and if dataA was an Obstacle
         if (dataB instanceof Player && dataA instanceof Obstacle) {
             ((Player) dataB).takeDamage(((Obstacle) dataA).damage);
+            ((Obstacle) dataA).didHitPlayer = true;
         }
 
         if (dataA instanceof Player && dataB instanceof Ground) {
-            ((Player) dataA).onGround = true;
+            ((Player) dataA).addGroundContacts();
+        }
+
+        if (dataB instanceof Player && dataA instanceof Ground) {
+            ((Player) dataB).addGroundContacts();
         }
 
 
@@ -44,7 +49,11 @@ public class CollisionListener implements ContactListener {
         Object dataB = b.getBody().getUserData();
 
         if (dataA instanceof Player && dataB instanceof Ground) {
-            ((Player) dataA).onGround = false;
+            ((Player) dataA).removeGroundContacts();
+        }
+
+        if (dataB instanceof Player && dataA instanceof Ground) {
+            ((Player) dataB).removeGroundContacts();
         }
     }
 
