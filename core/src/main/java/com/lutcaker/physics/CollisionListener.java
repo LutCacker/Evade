@@ -3,9 +3,14 @@ import com.badlogic.gdx.physics.box2d.*;
 import com.lutcaker.entities.Obstacle;
 import com.lutcaker.entities.Player;
 import com.lutcaker.game.Ground;
+import com.lutcaker.game.Main;
 
 
 public class CollisionListener implements ContactListener {
+    private Main game;
+    public CollisionListener(Main game) {
+        this.game = game;
+    }
 
     @Override
     public void beginContact(Contact contact) {
@@ -20,12 +25,24 @@ public class CollisionListener implements ContactListener {
         if (dataA instanceof Player && dataB instanceof Obstacle) {
             ((Player) dataA).takeDamage(((Obstacle) dataB).damage);
             ((Obstacle) dataB).didHitPlayer = true;
+            game.hurtSound.play(game.sfxVolume);
+
+            if (((Player) dataA).health == 0) {
+                game.hurtSound.stop();
+                game.deathSound.play(game.sfxVolume);
+            }
         }
 
         //CHeck if dataB was a player and if dataA was an Obstacle
         if (dataB instanceof Player && dataA instanceof Obstacle) {
             ((Player) dataB).takeDamage(((Obstacle) dataA).damage);
             ((Obstacle) dataA).didHitPlayer = true;
+            game.hurtSound.play(game.sfxVolume);
+
+            if (((Player) dataB).health == 0) {
+                game.hurtSound.stop();
+                game.deathSound.play(game.sfxVolume);
+            }
         }
 
         if (dataA instanceof Player && dataB instanceof Ground) {

@@ -86,7 +86,7 @@ public class GameScreen implements Screen {
 
         stage = new Stage(uiViewport);
 
-        listener = new CollisionListener();
+        listener = new CollisionListener(game);
         world.setContactListener(listener);
 
     }
@@ -147,8 +147,6 @@ public class GameScreen implements Screen {
             digitTextures[i] = new Texture(Gdx.files.internal(i + ".png"));
         }*/
         stage.addActor(table);
-        System.out.println(stage.getViewport().getWorldWidth());
-        System.out.println(stage.getViewport().getWorldHeight());
     }
 
 
@@ -206,6 +204,7 @@ public class GameScreen implements Screen {
 
             o.body.setLinearVelocity(0, -2f);
 
+
             if (obstacleY < deadZone) {
                 if (!o.didHitPlayer) {
                     player.addScore(5);
@@ -246,6 +245,7 @@ public class GameScreen implements Screen {
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.UP)) {
             player.state = PlayerState.ASCENDING;
+            game.jumpSound.play(game.sfxVolume);
         }
 
         if (player.state == PlayerState.ASCENDING) {

@@ -68,9 +68,10 @@ public class SettingsScreen implements Screen {
         svol.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent changeEvent, Actor actor) {
-                /*if (game.music != null) {
-
-                }*/
+                float volume = svol.getValue();
+                if (game.music != null) {
+                    game.music.setVolume(volume);
+                }
             }
         });
 
@@ -82,11 +83,11 @@ public class SettingsScreen implements Screen {
 
         table.row();
         Slider ssfx = new Slider(0f, 100f, 2f, false, skin);
-
+        ssfx.setValue(30f);
         ssfx.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent changeEvent, Actor actor) {
-
+                game.sfxVolume = ssfx.getValue();
             }
         });
 
